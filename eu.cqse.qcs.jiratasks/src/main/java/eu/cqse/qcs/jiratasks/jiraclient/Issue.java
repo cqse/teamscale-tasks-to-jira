@@ -40,6 +40,13 @@ public class Issue {
 		fields.put(fieldId, value);
 	}
 
+	/**
+	 * Sets additional field values from the given map.
+	 */
+	public void setAddtionalFields(Map<String, Object> additionalFieldsMap) {
+		fields.putAll(additionalFieldsMap);
+	}
+
 	public Map<String, Object> getFields() {
 		return fields;
 	}

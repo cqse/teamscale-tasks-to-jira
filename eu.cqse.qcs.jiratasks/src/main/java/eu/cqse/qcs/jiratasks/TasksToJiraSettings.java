@@ -3,6 +3,9 @@ package eu.cqse.qcs.jiratasks;
 import java.io.Console;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 
 import org.conqat.lib.commons.filesystem.FileSystemUtils;
@@ -25,6 +28,7 @@ public class TasksToJiraSettings {
 	private static final String TEAMSCALE_USER = "teamscaleUser";
 	private static final String TEAMSCALE_URL = "teamscaleUrl";
 	private static final String TEAMSCALE_PROJECT = "teamscaleProject";
+	private static final String ADDITIONAL_JIRA_FIELD_PREFIX = "jiraField.";
 
 	public final String teamscaleProject;
 	public final String teamscaleUrl;
@@ -37,6 +41,7 @@ public class TasksToJiraSettings {
 	public final Long jiraIssueType;
 	public final String jiraEpicKey;
 	public final String jiraEpicLinkFieldName;
+	public final Map<String, Object> jiraAddtionalFields;
 
 	public TasksToJiraSettings(File propertiesFile) throws IOException {
 		Properties properties = FileSystemUtils.readPropertiesFile(propertiesFile);
@@ -51,6 +56,19 @@ public class TasksToJiraSettings {
 		jiraEpicLinkFieldName = readValue(properties, JIRA_EPIC_LINK_FIELD_NAME);
 		jiraIssueType = Long.parseLong(readValue(properties, JIRA_ISSUE_TYPE));
 		jiraPassword = readPassword(properties, JIRA_PASSWORD);
+		jiraAddtionalFields = buildJiraAddtionalFieldsMap(properties);
+	}
+
+	private static Map<String, Object> buildJiraAddtionalFieldsMap(Properties properties) {
+		Map<String, Object> additionalFields = new HashMap<>();
+		for (Entry<Object, Object> entry : properties.entrySet()) {
+			String key = (String) entry.getKey();
+			if (!key.startsWith(ADDITIONAL_JIRA_FIELD_PREFIX)) {
+				continue;
+			}
+			additionalFields.put(StringUtils.stripPrefix(key, ADDITIONAL_JIRA_FIELD_PREFIX), entry.getValue());
+		}
+		return additionalFields;
 	}
 
 	/**

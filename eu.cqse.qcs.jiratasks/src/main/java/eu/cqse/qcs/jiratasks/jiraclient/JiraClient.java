@@ -56,6 +56,7 @@ public class JiraClient extends RestClientBase {
 		Issue issue = new Issue(settings.jiraProject, task.getSubject(),
 				JiraTaskCreatorUtils.convertMarkdownToJira(task.getDescription()), settings.jiraIssueType);
 		issue.setAdditionalField(settings.jiraEpicLinkFieldName, settings.jiraEpicKey);
+		issue.setAddtionalFields(settings.jiraAddtionalFields);
 		Response<IssueResponse> response = jiraAPI.createIssue(issue).execute();
 		throwErrorOnUnsuccessfulResponse(response);
 		return response.body();

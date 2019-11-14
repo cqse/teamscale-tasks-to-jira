@@ -1,11 +1,13 @@
 package eu.cqse.qcs.jiratasks.jiraclient;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Response data after creating an issue.
  */
+@JsonIgnoreProperties({ "self" })
 public class IssueResponse {
 
 	/** Jira JSON field name */
