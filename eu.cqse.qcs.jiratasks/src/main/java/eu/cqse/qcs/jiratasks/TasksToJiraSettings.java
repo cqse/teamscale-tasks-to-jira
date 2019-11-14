@@ -28,6 +28,7 @@ public class TasksToJiraSettings {
 	private static final String TEAMSCALE_USER = "teamscaleUser";
 	private static final String TEAMSCALE_URL = "teamscaleUrl";
 	private static final String TEAMSCALE_PROJECT = "teamscaleProject";
+	private static final String TASK_LINK_TEXT = "taskLinkText";
 	private static final String ADDITIONAL_JIRA_FIELD_PREFIX = "jiraField.";
 
 	public final String teamscaleProject;
@@ -41,21 +42,23 @@ public class TasksToJiraSettings {
 	public final Long jiraIssueType;
 	public final String jiraEpicKey;
 	public final String jiraEpicLinkFieldName;
+	public final String taskLinkText;
 	public final Map<String, Object> jiraAddtionalFields;
 
 	public TasksToJiraSettings(File propertiesFile) throws IOException {
 		Properties properties = FileSystemUtils.readPropertiesFile(propertiesFile);
 		teamscaleProject = readValue(properties, TEAMSCALE_PROJECT);
-		teamscaleUrl = readValue(properties, TEAMSCALE_URL);
+		teamscaleUrl = StringUtils.stripSuffix(readValue(properties, TEAMSCALE_URL), "/");
 		teamscaleApiKey = readValue(properties, TEAMSCALE_API_KEY);
 		teamscaleUser = readValue(properties, TEAMSCALE_USER);
-		jiraUrl = readValue(properties, JIRA_URL);
+		jiraUrl = StringUtils.stripSuffix(readValue(properties, JIRA_URL), "/");
 		jiraUser = readValue(properties, JIRA_USER);
 		jiraProject = readValue(properties, JIRA_PROJECT);
 		jiraEpicKey = readValue(properties, JIRA_EPIC_KEY);
 		jiraEpicLinkFieldName = readValue(properties, JIRA_EPIC_LINK_FIELD_NAME);
 		jiraIssueType = Long.parseLong(readValue(properties, JIRA_ISSUE_TYPE));
 		jiraPassword = readPassword(properties, JIRA_PASSWORD);
+		taskLinkText = readValue(properties, TASK_LINK_TEXT);
 		jiraAddtionalFields = buildJiraAddtionalFieldsMap(properties);
 	}
 

@@ -1,6 +1,9 @@
 package eu.cqse.qcs.jiratasks.jiraclient;
 
 import java.io.IOException;
+import java.net.URI;
+
+import org.conqat.lib.commons.net.UrlUtils;
 
 import eu.cqse.qcs.jiratasks.JiraTaskException;
 import eu.cqse.qcs.jiratasks.RestClientBase;
@@ -53,13 +56,24 @@ public class JiraClient extends RestClientBase {
 	 * Creates a new Jira issue from the given {@link Task}
 	 */
 	private IssueResponse createNewIssue(Task task) throws IOException {
-		Issue issue = new Issue(settings.jiraProject, task.getSubject(),
-				JiraTaskCreatorUtils.convertMarkdownToJira(task.getDescription()), settings.jiraIssueType);
+		Issue issue = new Issue(settings.jiraProject, task.getSubject(), buildIssueDescription(task),
+				settings.jiraIssueType);
 		issue.setAdditionalField(settings.jiraEpicLinkFieldName, settings.jiraEpicKey);
 		issue.setAddtionalFields(settings.jiraAddtionalFields);
 		Response<IssueResponse> response = jiraAPI.createIssue(issue).execute();
 		throwErrorOnUnsuccessfulResponse(response);
 		return response.body();
+	}
+
+	/**
+	 * Builds the descriptoin Text for the issue
+	 */
+	private String buildIssueDescription(Task task) {
+		String taskLink = "[Task #" + task.getId() + "|" + JiraTaskCreatorUtils.buildUrlForTask(settings, task) + "]";
+
+		return JiraTaskCreatorUtils.convertMarkdownToJira(task.getDescription()) + "\n\n"
+				+ settings.taskLinkText.replace("{task}", taskLink);
+
 	}
 
 }
