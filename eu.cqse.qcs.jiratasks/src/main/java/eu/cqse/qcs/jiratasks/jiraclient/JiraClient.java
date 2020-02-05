@@ -1,9 +1,6 @@
 package eu.cqse.qcs.jiratasks.jiraclient;
 
 import java.io.IOException;
-import java.net.URI;
-
-import org.conqat.lib.commons.net.UrlUtils;
 
 import eu.cqse.qcs.jiratasks.JiraTaskException;
 import eu.cqse.qcs.jiratasks.RestClientBase;
@@ -28,7 +25,7 @@ public class JiraClient extends RestClientBase {
 
 	/**
 	 * Pushes a {@link Task} as new issue to Jira
-	 * 
+	 *
 	 * @return the {@link IssueResponse} for the created issue
 	 */
 	public IssueResponse pushTask(Task task) throws JiraTaskException {
@@ -56,7 +53,7 @@ public class JiraClient extends RestClientBase {
 	 * Creates a new Jira issue from the given {@link Task}
 	 */
 	private IssueResponse createNewIssue(Task task) throws IOException {
-		Issue issue = new Issue(settings.jiraProject, task.getSubject(), buildIssueDescription(task),
+		Issue issue = new Issue(settings.jiraProject, buildIssueTitle(task), buildIssueDescription(task),
 				settings.jiraIssueType);
 		issue.setAdditionalField(settings.jiraEpicLinkFieldName, settings.jiraEpicKey);
 		issue.setAddtionalFields(settings.jiraAddtionalFields);
@@ -66,7 +63,20 @@ public class JiraClient extends RestClientBase {
 	}
 
 	/**
-	 * Builds the descriptoin Text for the issue
+	 * Builds the title for the issue by prepending a prefix, if set.
+	 */
+	private String buildIssueTitle(Task task) {
+		String titlePrefix = settings.issueTitlePrefix;
+
+		if (titlePrefix == null || titlePrefix.isEmpty()) {
+			return task.getSubject();
+		}
+
+		return titlePrefix + " " + task.getSubject();
+	}
+
+	/**
+	 * Builds the description Text for the issue
 	 */
 	private String buildIssueDescription(Task task) {
 		String taskLink = "[Task #" + task.getId() + "|" + JiraTaskCreatorUtils.buildUrlForTask(settings, task) + "]";
