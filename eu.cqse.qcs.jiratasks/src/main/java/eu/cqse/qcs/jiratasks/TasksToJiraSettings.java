@@ -29,6 +29,7 @@ public class TasksToJiraSettings {
 	private static final String TEAMSCALE_URL = "teamscaleUrl";
 	private static final String TEAMSCALE_PROJECT = "teamscaleProject";
 	private static final String TASK_LINK_TEXT = "taskLinkText";
+	private static final String ISSUE_TITLE_PREFIX = "issueTitlePrefix";
 	private static final String ADDITIONAL_JIRA_FIELD_PREFIX = "jiraField.";
 
 	public final String teamscaleProject;
@@ -43,6 +44,7 @@ public class TasksToJiraSettings {
 	public final String jiraEpicKey;
 	public final String jiraEpicLinkFieldName;
 	public final String taskLinkText;
+	public final String issueTitlePrefix;
 	public final Map<String, Object> jiraAddtionalFields;
 
 	public TasksToJiraSettings(File propertiesFile) throws IOException {
@@ -59,6 +61,7 @@ public class TasksToJiraSettings {
 		jiraIssueType = Long.parseLong(readValue(properties, JIRA_ISSUE_TYPE));
 		jiraPassword = readPassword(properties, JIRA_PASSWORD);
 		taskLinkText = readValue(properties, TASK_LINK_TEXT);
+		issueTitlePrefix = readValue(properties, ISSUE_TITLE_PREFIX);
 		jiraAddtionalFields = buildJiraAddtionalFieldsMap(properties);
 	}
 
