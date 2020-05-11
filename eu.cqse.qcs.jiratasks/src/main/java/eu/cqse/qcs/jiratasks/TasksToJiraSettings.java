@@ -24,19 +24,23 @@ public class TasksToJiraSettings {
 	private static final String JIRA_PASSWORD = "jiraPassword";
 	private static final String JIRA_USER = "jiraUser";
 	private static final String JIRA_URL = "jiraUrl";
+	private static final String JIRA_TRUST_ALL_SSL_CERTS = "jiraTrustAllSslCerts";
 	private static final String TEAMSCALE_API_KEY = "teamscaleApiKey";
 	private static final String TEAMSCALE_USER = "teamscaleUser";
 	private static final String TEAMSCALE_URL = "teamscaleUrl";
 	private static final String TEAMSCALE_PROJECT = "teamscaleProject";
+	private static final String TEAMSCALE_TRUST_ALL_SSL_CERTS = "teamscaleTrustAllSslCerts";
 	private static final String TASK_LINK_TEXT = "taskLinkText";
 	private static final String ISSUE_TITLE_PREFIX = "issueTitlePrefix";
 	private static final String ADDITIONAL_JIRA_FIELD_PREFIX = "jiraField.";
 
 	public final String teamscaleProject;
 	public final String teamscaleUrl;
+	public final boolean teamscaleTrustAllSslCerts;
 	public final String teamscaleUser;
 	public final String teamscaleApiKey;
 	public final String jiraUrl;
+	public final boolean jiraTrustAllSslCerts;
 	public final String jiraUser;
 	public final String jiraPassword;
 	public final String jiraProject;
@@ -53,6 +57,7 @@ public class TasksToJiraSettings {
 		teamscaleUrl = StringUtils.stripSuffix(readValue(properties, TEAMSCALE_URL), "/");
 		teamscaleApiKey = readValue(properties, TEAMSCALE_API_KEY);
 		teamscaleUser = readValue(properties, TEAMSCALE_USER);
+		teamscaleTrustAllSslCerts = Boolean.parseBoolean(readValue(properties, TEAMSCALE_TRUST_ALL_SSL_CERTS));
 		jiraUrl = StringUtils.stripSuffix(readValue(properties, JIRA_URL), "/");
 		jiraUser = readValue(properties, JIRA_USER);
 		jiraProject = readValue(properties, JIRA_PROJECT);
@@ -63,6 +68,7 @@ public class TasksToJiraSettings {
 		taskLinkText = readValue(properties, TASK_LINK_TEXT);
 		issueTitlePrefix = readValue(properties, ISSUE_TITLE_PREFIX);
 		jiraAddtionalFields = buildJiraAddtionalFieldsMap(properties);
+		jiraTrustAllSslCerts = Boolean.parseBoolean(readValue(properties, JIRA_TRUST_ALL_SSL_CERTS));
 	}
 
 	private static Map<String, Object> buildJiraAddtionalFieldsMap(Properties properties) {
@@ -90,7 +96,7 @@ public class TasksToJiraSettings {
 	}
 
 	/**
-	 * Reads a password fromthe properties, if it is specified there. If not, a
+	 * Reads a password from the properties, if it is specified there. If not, a
 	 * console input is prompted to the user.
 	 */
 	private String readPassword(Properties properties, String key) {
