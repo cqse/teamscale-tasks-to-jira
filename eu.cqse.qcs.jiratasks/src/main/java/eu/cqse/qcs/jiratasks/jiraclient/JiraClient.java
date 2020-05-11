@@ -20,7 +20,8 @@ public class JiraClient extends RestClientBase {
 	/** Constructor */
 	public JiraClient(TasksToJiraSettings settings) {
 		super("Jira", settings);
-		jiraAPI = createAPI(IJiraAPI.class, settings.jiraUrl, settings.jiraUser, settings.jiraPassword);
+		jiraAPI = createAPI(IJiraAPI.class, settings.jiraUrl, settings.jiraUser, settings.jiraPassword,
+				settings.jiraTrustAllSslCerts);
 	}
 
 	/**
