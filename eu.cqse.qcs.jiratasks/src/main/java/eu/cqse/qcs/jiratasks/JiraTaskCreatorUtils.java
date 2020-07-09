@@ -24,7 +24,8 @@ public class JiraTaskCreatorUtils {
 		if (markdown == null) {
 			return StringUtils.EMPTY_STRING;
 		}
-		return markdown.replaceAll("`(.*?)`", "{{$1}}").replaceAll("\\[(.*?)\\]\\((.*?)\\)", "[$1|$2]");
+		return markdown.replaceAll("(?sm)^```(.*?)```$", "{code}$1{code}")
+				.replaceAll("`(.*?)`", "{{$1}}")
+				.replaceAll("\\[(.*?)\\]\\((.*?)\\)", "[$1|$2]");
 	}
-
 }
