@@ -18,7 +18,7 @@ public class IssueTest {
 		String result = new ObjectMapper().writeValueAsString(issue);
 		System.out.println(result);
 		assertThat(result, is(
-				"{\"fields\":{\"summary\":\"A sample ticket\",\"issuetype\":{\"id\":\"10006\"},\"project\":{\"id\":\"ABC\"},\"description\":\"The description of the example\",\"customfield_10001\":\"ABC-1\"}}"));
+				"{\"fields\":{\"summary\":\"A sample ticket\",\"issuetype\":{\"id\":\"10006\"},\"project\":{\"key\":\"ABC\"},\"description\":\"The description of the example\",\"customfield_10001\":\"ABC-1\"}}"));
 	}
 
 }
