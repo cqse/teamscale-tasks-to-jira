@@ -1,14 +1,14 @@
 package eu.cqse.qcs.jiratasks;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import eu.cqse.qcs.jiratasks.jiraclient.IssueResponse;
 import eu.cqse.qcs.jiratasks.jiraclient.JiraClient;
 import eu.cqse.qcs.jiratasks.teamscaleclient.Task;
 import eu.cqse.qcs.jiratasks.teamscaleclient.TeamscaleClient;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Creator for Jira issues from Teamscale tasks.
@@ -28,7 +28,7 @@ public class JiraTaskCreator {
 	 */
 	public static void main(String[] args) {
 		if (args.length < 2) {
-			System.err.println("Error: Expected arguemnt for settings file and at least one task id");
+			System.err.println("Error: Expected argument for settings file and at least one task id");
 		}
 		try {
 			TasksToJiraSettings settings = new TasksToJiraSettings(new File(args[0]));

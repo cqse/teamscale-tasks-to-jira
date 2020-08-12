@@ -1,17 +1,12 @@
 package eu.cqse.qcs.jiratasks.teamscaleclient;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-
-import org.conqat.lib.commons.collections.CollectionUtils;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.conqat.lib.commons.collections.CollectionUtils;
+
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * A task is essentially a wrapper around a selection of findings and is
@@ -63,6 +58,9 @@ public class Task implements Serializable {
 
 	/** The name of the JSON property name for {@link #updatedBy}. */
 	protected static final String UPDATED_BY_PROPERTY = "updatedBy";
+
+	/** The name of the JSON property name for {@link #codeSnippets}. */
+	protected static final String CODE_SNIPPETS_PROPERTY = "codeSnippets";
 
 	/** The unique id */
 	@JsonProperty(ID_PROPERTY)
@@ -117,6 +115,10 @@ public class Task implements Serializable {
 	 */
 	@JsonProperty(FINDINGS_PROPERTY)
 	private ArrayList<Object> findings;
+
+	/** List of Code Snippets */
+	@JsonProperty(CODE_SNIPPETS_PROPERTY)
+	private List<Object> codeSnippets;
 
 	@JsonCreator
 	public Task(@JsonProperty(ID_PROPERTY) int id, @JsonProperty(SUBJECT_PROPERTY) String subject,
