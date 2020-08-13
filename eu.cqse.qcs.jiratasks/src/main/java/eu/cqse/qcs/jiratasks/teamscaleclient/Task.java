@@ -150,6 +150,7 @@ public class Task implements Serializable {
 			this.tags = new ArrayList<>();
 		}
 		this.findings = new ArrayList<>();
+		this.codeSnippets = new ArrayList<>();
 	}
 
 	/** Returns the subject. */

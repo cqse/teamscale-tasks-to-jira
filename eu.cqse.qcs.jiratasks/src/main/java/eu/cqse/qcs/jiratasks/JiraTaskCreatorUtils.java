@@ -13,7 +13,8 @@ public class JiraTaskCreatorUtils {
 	 * Builds the Teamscale URL pointing to the page of the task
 	 */
 	public static String buildUrlForTask(TasksToJiraSettings settings, Task task) {
-		return settings.teamscaleUrl + "/tasks.html#details/" + settings.teamscaleProject + "/?id=" + task.getId();
+		return settings.teamscaleUrl + "/qualitycontrol.html#tasks/" + settings.teamscaleProject + "/?id="
+				+ task.getId() + "&action=details";
 	}
 
 	/**
@@ -24,8 +25,7 @@ public class JiraTaskCreatorUtils {
 		if (markdown == null) {
 			return StringUtils.EMPTY_STRING;
 		}
-		return markdown.replaceAll("(?sm)^```(.*?)```$", "{code}$1{code}")
-				.replaceAll("`(.*?)`", "{{$1}}")
+		return markdown.replaceAll("(?sm)^```(.*?)```$", "{code}$1{code}").replaceAll("`(.*?)`", "{{$1}}")
 				.replaceAll("\\[(.*?)\\]\\((.*?)\\)", "[$1|$2]");
 	}
 }

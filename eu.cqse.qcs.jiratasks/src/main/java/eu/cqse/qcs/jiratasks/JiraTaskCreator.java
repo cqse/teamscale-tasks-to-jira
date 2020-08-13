@@ -44,7 +44,7 @@ public class JiraTaskCreator {
 		}
 	}
 
-	private JiraTaskCreator(TasksToJiraSettings settings) {
+	JiraTaskCreator(TasksToJiraSettings settings) {
 		this.settings = settings;
 		teamscaleClient = new TeamscaleClient(settings);
 		jiraClient = new JiraClient(settings);
@@ -53,7 +53,7 @@ public class JiraTaskCreator {
 	/**
 	 * Runs task creation.
 	 */
-	private void run(List<Integer> taskIds) throws JiraTaskException {
+	 void run(List<Integer> taskIds) throws JiraTaskException {
 		List<Task> selectedTasks = readTasksFromTeamscale(taskIds);
 		for (Task task : selectedTasks) {
 			System.out.println("\n" + task.getId() + " : " + task.getSubject());
