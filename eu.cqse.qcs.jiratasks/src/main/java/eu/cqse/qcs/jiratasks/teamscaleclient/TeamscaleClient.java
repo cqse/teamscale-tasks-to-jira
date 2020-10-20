@@ -17,7 +17,7 @@ public class TeamscaleClient extends RestClientBase {
 
 	public TeamscaleClient(TasksToJiraSettings settings) {
 		super("Teamscale", settings);
-		teamscaleAPI = createAPI(ITeamscaleAPI.class, settings.teamscaleUrl, settings.teamscaleUser,
+		teamscaleAPI = createAPI(ITeamscaleAPI.class, settings.teamscaleUrl + "/api/", settings.teamscaleUser,
 				settings.teamscaleApiKey, settings.teamscaleTrustAllSslCerts);
 	}
 
