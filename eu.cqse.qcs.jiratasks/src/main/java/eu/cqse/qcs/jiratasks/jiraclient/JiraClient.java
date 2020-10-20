@@ -2,10 +2,10 @@ package eu.cqse.qcs.jiratasks.jiraclient;
 
 import java.io.IOException;
 
+import eu.cqse.qcs.jiratasks.JiraTaskCreatorUtils;
 import eu.cqse.qcs.jiratasks.JiraTaskException;
 import eu.cqse.qcs.jiratasks.RestClientBase;
 import eu.cqse.qcs.jiratasks.TasksToJiraSettings;
-import eu.cqse.qcs.jiratasks.JiraTaskCreatorUtils;
 import eu.cqse.qcs.jiratasks.teamscaleclient.Task;
 import retrofit2.Response;
 
@@ -56,7 +56,9 @@ public class JiraClient extends RestClientBase {
 	private IssueResponse createNewIssue(Task task) throws IOException {
 		Issue issue = new Issue(settings.jiraProject, buildIssueTitle(task), buildIssueDescription(task),
 				settings.jiraIssueType);
-		issue.setAdditionalField(settings.jiraEpicLinkFieldName, settings.jiraEpicKey);
+		if (settings.jiraEpicLinkFieldName != null) {
+			issue.setAdditionalField(settings.jiraEpicLinkFieldName, settings.jiraEpicKey);
+		}
 		issue.setAddtionalFields(settings.jiraAddtionalFields);
 		Response<IssueResponse> response = jiraAPI.createIssue(issue).execute();
 		throwErrorOnUnsuccessfulResponse(response);
