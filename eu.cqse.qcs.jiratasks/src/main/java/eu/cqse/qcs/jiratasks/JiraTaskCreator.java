@@ -38,9 +38,10 @@ public class JiraTaskCreator {
 			}
 			JiraTaskCreator taskCreator = new JiraTaskCreator(settings);
 			taskCreator.run(taskIds);
-
 		} catch (IOException | JiraTaskException e) {
 			e.printStackTrace();
+		} finally {
+			System.exit(0);
 		}
 	}
 
