@@ -1,6 +1,7 @@
 package eu.cqse.qcs.jiratasks.jiraclient;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import eu.cqse.qcs.jiratasks.JiraTaskCreatorUtils;
 import eu.cqse.qcs.jiratasks.JiraTaskException;
@@ -57,7 +58,13 @@ public class JiraClient extends RestClientBase {
 		Issue issue = new Issue(settings.jiraProject, buildIssueTitle(task), buildIssueDescription(task),
 				settings.jiraIssueType);
 		if (settings.jiraEpicLinkFieldName != null) {
-			issue.setAdditionalField(settings.jiraEpicLinkFieldName, settings.jiraEpicKey);
+			if(settings.jiraEpicLinkFieldName.equals("parent")){
+				var value = new HashMap<String, String>();
+				value.put("key", settings.jiraEpicKey);
+				issue.setAdditionalField(settings.jiraEpicLinkFieldName, value);
+			} else {
+				issue.setAdditionalField(settings.jiraEpicLinkFieldName, settings.jiraEpicKey);
+			}
 		}
 		issue.setAddtionalFields(settings.jiraAddtionalFields);
 		Response<IssueResponse> response = jiraAPI.createIssue(issue).execute();
