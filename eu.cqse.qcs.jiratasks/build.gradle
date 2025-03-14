@@ -18,6 +18,12 @@ repositories {
     mavenCentral()
 }
 
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(11))
+    }
+}
+
 dependencies {
 
     implementation fileTree(dir: 'lib', include: ['*.jar'])
@@ -45,3 +51,6 @@ jar {
         attributes 'Main-Class': 'eu.cqse.qcs.jiratasks.JiraTaskCreator'
     }
 }
+
+// Define the main class for the application
+mainClassName = 'eu.cqse.qcs.jiratasks.JiraTaskCreator'
